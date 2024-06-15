@@ -90,7 +90,7 @@ DATABASES = {
     }
 }
 
-
+AUTH_USER_MODEL = "users.User"
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
@@ -140,4 +140,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 STATIC_URL = "static/"
 STATIC_ROOT = str(BASE_DIR / "static")
 
-CORS_URLS_REGEX = r"*"
+# CORS_URLS_REGEX = r"*"
