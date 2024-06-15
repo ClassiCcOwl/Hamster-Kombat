@@ -83,6 +83,7 @@ DATABASES = {
         "PORT": env("PGPORT", default=5432),
         "OPTIONS": {
             "sslmode": "require",
+            'options':env("PGENDPOINT")
         },
     }
 }
