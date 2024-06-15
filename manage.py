@@ -3,10 +3,10 @@
 import os
 import sys
 
-
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hamster_kombat.settings.local")
+    environ_mode = os.environ.get('DJANGO_ENVIRON_MODE','local')
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", f"hamster_kombat.settings.{environ_mode}")
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
