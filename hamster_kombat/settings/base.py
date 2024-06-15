@@ -47,7 +47,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "HamsterKombat.urls"
+ROOT_URLCONF = "hamster_kombat.urls"
 
 TEMPLATES = [
     {
@@ -65,7 +65,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "HamsterKombat.wsgi.application"
+WSGI_APPLICATION = "hamster_kombat.wsgi.application"
 
 
 # Database

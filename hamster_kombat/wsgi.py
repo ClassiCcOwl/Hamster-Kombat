@@ -12,6 +12,6 @@ import os
 from django.core.wsgi import get_wsgi_application
 
 # TODO: change into product
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "HamsterKombat.settings.local")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "hamster_kombat.settings.local")
 
 application = get_wsgi_application()
