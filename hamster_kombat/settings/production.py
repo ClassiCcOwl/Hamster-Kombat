@@ -7,4 +7,4 @@ SECRET_KEY = env(
 )
 
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", ["*"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
