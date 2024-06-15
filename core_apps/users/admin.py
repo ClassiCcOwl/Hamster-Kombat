@@ -15,8 +15,6 @@ class UserAdmin(BaseUserAdmin):
         "pkid",
         "id",
         "username",
-        "first_name",
-        "last_name",
         "is_active",
         "is_staff",
     ]
@@ -40,15 +38,6 @@ class UserAdmin(BaseUserAdmin):
                 "fields": (
                     "username",
                     "password",
-                ),
-            },
-        ),
-        (
-            "Personal Info",
-            {
-                "fields": (
-                    "first_name",
-                    "last_name",
                 ),
             },
         ),
@@ -82,15 +71,15 @@ class UserAdmin(BaseUserAdmin):
                 "classes": ("wide",),
                 "fields": (
                     "username",
-                    "first_name",
-                    "last_name",
                     "password1",
                     "password2",
                 ),
             },
         ),
     )
-    search_fields = ["username", "first_name", "last_name"]
+    search_fields = [
+        "username",
+    ]
 
 
 admin.site.register(User, UserAdmin)
