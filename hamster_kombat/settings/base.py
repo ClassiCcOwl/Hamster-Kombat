@@ -73,7 +73,19 @@ WSGI_APPLICATION = "hamster_kombat.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {"default": env.db("DATABASE_URL")}
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("PGDATABASE"),
+        "USER": env("PGUSER"),
+        "PASSWORD": env("PGPASSWORD"),
+        "HOST": env("PGHOST"),
+        "PORT": env("PGPORT", default=5432),
+        "OPTIONS": {
+            "sslmode": "require",
+        },
+    }
+}
 
 
 # Password validation
