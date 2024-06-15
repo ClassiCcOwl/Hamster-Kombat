@@ -8,3 +8,4 @@ SECRET_KEY = env(
 
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
+CSRF_TRUSTED_ORIGINS = ["https://hamster-kombat.chbk.run"]
