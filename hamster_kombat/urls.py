@@ -20,3 +20,8 @@ urlpatterns = [
     path("", schema_view.with_ui("swagger", cache_timeout=0)),
     path("admin/", admin.site.urls),
 ]
+
+
+admin.site.site_header = "Hamster Kombat API Admin"
+admin.site.site_title = "Hamster Kombat API Admin Portal"
+admin.site.index_title = "Welcome to Hamster Kombat API Portal"
