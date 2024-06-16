@@ -9,10 +9,6 @@ from drf_yasg.utils import swagger_auto_schema
 
 
 class CardsApi(APIView):
-
-    class CardsInputSerializer(serializers.Serializer):
-        name = serializers.CharField(max_length=30)
-
     class CardsOutPutSerializer(serializers.ModelSerializer):
         category = serializers.CharField(source="category.name")
 
@@ -26,26 +22,13 @@ class CardsApi(APIView):
                 "updated_at",
             ]
 
+    @swagger_auto_schema(responses={200: CardsOutPutSerializer(many=True)})
     def get(self, request):
         query = get_cards()
-
         return Response(
             self.CardsOutPutSerializer(
                 query, context={"request": request}, many=True
             ).data
-        )
-
-    @swagger_auto_schema(request_body=CardsInputSerializer)
-    def post(self, request):
-        serializer = self.CardsInputSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        try:
-            query = create_card(name=serializer.validated_data.get("name"))
-        except Exception as ex:
-            return Response(str(ex), status=status.HTTP_400_BAD_REQUEST)
-
-        return Response(
-            self.CardsOutPutSerializer(query, context={"request": request}).data
         )
 
 
@@ -58,7 +41,6 @@ class CardApi(APIView):
         name = serializers.CharField(max_length=50)
         # TODO: fix image
         image = serializers.SerializerMethodField()
-
 
     class CardOutPutSerializer(serializers.ModelSerializer):
         category = serializers.CharField(source="category.name")
@@ -73,7 +55,7 @@ class CardApi(APIView):
                 "updated_at",
             ]
 
-    # @swagger_auto_schema(request_body=CardInputSerializer)
+    @swagger_auto_schema(responses={200: CardOutPutSerializer(many=True)})
     def get(self, request, category):
         query = get_card(category=category)
         return Response(
