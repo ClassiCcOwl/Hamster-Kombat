@@ -25,6 +25,9 @@ class Card(TimeStampedModel):
     def __str__(self) -> str:
         return self.name
 
+    class Meta:
+        unique_together = [["name", "category"]]
+
 
 class Level(TimeStampedModel):
     level = models.IntegerField()
