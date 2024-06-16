@@ -20,21 +20,21 @@ class Card(TimeStampedModel):
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="cards"
     )
-    image = models.ImageField(upload_to="card_images")
+    image = models.ImageField(upload_to="card_images", blank=True)
 
     def __str__(self) -> str:
-        return f"{self.category}|{self.name}"
+        return self.name
 
 
 class Level(TimeStampedModel):
     level = models.IntegerField()
     upgrade_cost = models.PositiveIntegerField()
     profit_per_hour = models.PositiveIntegerField()
-    card = models.OneToOneField(Card, on_delete=models.CASCADE, related_name="levels")
+    card = models.ForeignKey(Card, on_delete=models.CASCADE, related_name="levels")
     coin_per_profit = models.PositiveIntegerField(blank=True, editable=False)
 
     class Meta:
-        unique_together = ["card", "level"]
+        unique_together = [["level", "card"]]
         ordering = ["-level"]
 
     def __str__(self) -> str:
