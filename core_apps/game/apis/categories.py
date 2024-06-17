@@ -4,44 +4,47 @@ from rest_framework import serializers
 from rest_framework import status
 from core_apps.game.models import Category
 from core_apps.game.services.categories import create_category
-from core_apps.game.selectors.categories import get_categories
+from core_apps.game.selectors.categories import get_all_categories
 from drf_yasg.utils import swagger_auto_schema
 
 
-class CategoriesApi(APIView):
+class AllCategoriesApi(APIView):
 
-    class CategoryInputSerializer(serializers.Serializer):
+    class CategoryCreateInputSerializer(serializers.Serializer):
         name = serializers.CharField(max_length=30)
 
-    class CategoryOutPutSerializer(serializers.ModelSerializer):
+    class AllCategoriesOutPutSerializer(serializers.ModelSerializer):
+        cards_count = serializers.SerializerMethodField()
+
         class Meta:
             model = Category
             fields = [
                 "pkid",
-                "id",
                 "name",
-                "created_at",
-                "updated_at",
+                "cards_count",
             ]
 
+        def get_cards_count(self, obj):
+            return obj.cards.count()
+
     @swagger_auto_schema(
-        responses={200: CategoryOutPutSerializer(many=True)},
+        responses={200: AllCategoriesOutPutSerializer(many=True)},
     )
     def get(self, request):
-        query = get_categories()
+        query = get_all_categories()
 
         return Response(
-            self.CategoryOutPutSerializer(
+            self.AllCategoriesOutPutSerializer(
                 query, context={"request": request}, many=True
             ).data
         )
 
     @swagger_auto_schema(
-        request_body=CategoryInputSerializer,
-        responses={200: CategoryOutPutSerializer(many=True)},
+        request_body=CategoryCreateInputSerializer,
+        responses={200: AllCategoriesOutPutSerializer(many=True)},
     )
     def post(self, request):
-        serializer = self.CategoryInputSerializer(data=request.data)
+        serializer = self.CategoryCreateInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         try:
             query = create_category(name=serializer.validated_data.get("name"))
@@ -49,5 +52,5 @@ class CategoriesApi(APIView):
             return Response(str(ex), status=status.HTTP_400_BAD_REQUEST)
 
         return Response(
-            self.CategoryOutPutSerializer(query, context={"request": request}).data
+            self.AllCategoriesOutPutSerializer(query, context={"request": request}).data
         )

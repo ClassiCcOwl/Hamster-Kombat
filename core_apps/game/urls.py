@@ -3,7 +3,7 @@ from .apis.categories import AllCategoriesApi
 from .apis.cards import AllCategoriesCardsApi, SingleCategoryCardsApi, SingleCardApi
 
 urlpatterns = [
-    path("categories/", AllCategoriesApi.as_view(), name="categories"),
+    path("categories/", AllCategoriesApi.as_view(), name="all_categories"),
     path("cards/", AllCategoriesCardsApi.as_view(), name="all_categories_cards"),
     path(
         "cards/<str:category>/",
