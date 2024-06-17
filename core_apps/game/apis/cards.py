@@ -15,11 +15,9 @@ class CardsApi(APIView):
         class Meta:
             model = Card
             fields = [
-                "id",
                 "name",
                 "category",
-                "created_at",
-                "updated_at",
+                "slug",
             ]
 
     @swagger_auto_schema(
@@ -50,11 +48,9 @@ class CardApi(APIView):
         class Meta:
             model = Card
             fields = [
-                "id",
                 "name",
                 "category",
-                "created_at",
-                "updated_at",
+                "slug",
             ]
 
     @swagger_auto_schema(responses={200: CardOutPutSerializer(many=True)})

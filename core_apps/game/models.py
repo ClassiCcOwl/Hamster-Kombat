@@ -1,7 +1,6 @@
 from django.db import models
 from core_apps.common.models import TimeStampedModel
-from django.db.models import F
-
+from django.template.defaultfilters import slugify
 
 class Category(TimeStampedModel):
 
@@ -19,21 +18,26 @@ class Category(TimeStampedModel):
 
 
 class Card(TimeStampedModel):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(max_length=300, null=True , blank=True)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="cards"
     )
     image = models.ImageField(upload_to="card_images", blank=True)
-
-    def __str__(self) -> str:
-        return self.name
-
     class Meta:
         unique_together = [["name", "category"]]
         indexes = [
             models.Index(fields=['name']), 
             models.Index(fields=['category']), 
         ]
+
+
+    def __str__(self) -> str:
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Card, self).save(*args, **kwargs)
 
 
 class Level(TimeStampedModel):
