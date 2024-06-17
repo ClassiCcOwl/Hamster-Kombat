@@ -6,44 +6,20 @@ from core_apps.game.models import Card
 from core_apps.game.services.cards import create_card
 from core_apps.game.selectors.cards import (
     get_single_card,
-    get_single_category_cards,
-    get_all_categories_cards,
+    get_all_cards,
 )
 from drf_yasg.utils import swagger_auto_schema
 
 
-class AllCategoriesCardsApi(APIView):
-    class AllCategoryCardsOutPutSerializer(serializers.ModelSerializer):
-        category = serializers.CharField(source="category.name")
+class AllCardsApi(APIView):
 
-        class Meta:
-            model = Card
-            fields = [
-                "name",
-                "category",
-                "slug",
-            ]
-
-    @swagger_auto_schema(
-        responses={200: AllCategoryCardsOutPutSerializer(many=True)},
-    )
-    def get(self, request):
-        cards = get_all_categories_cards()
-        return Response(
-            self.AllCategoryCardsOutPutSerializer(
-                cards, context={"request": request}, many=True
-            ).data
-        )
-
-
-class SingleCategoryCardsApi(APIView):
-
-    class SingleCategoryCardsCreateInputSerializer(serializers.Serializer):
+    class CardCreateInputSerializer(serializers.Serializer):
         name = serializers.CharField(max_length=50)
+        category = serializers.CharField(max_length=30)
         # TODO: fix image
         image = serializers.SerializerMethodField()
 
-    class SingleCategoryCardsOutPutSerializer(serializers.ModelSerializer):
+    class CardsOutPutSerializer(serializers.ModelSerializer):
         category = serializers.CharField(source="category.name")
 
         class Meta:
@@ -55,26 +31,28 @@ class SingleCategoryCardsApi(APIView):
             ]
 
     @swagger_auto_schema(
-        responses={200: SingleCategoryCardsOutPutSerializer(many=True)}
+        responses={200: CardsOutPutSerializer(many=True)},
     )
-    def get(self, request, category):
-        cards = get_single_category_cards(category=category)
+    def get(self, request):
+        cards = get_all_cards()
         return Response(
-            self.SingleCategoryCardsOutPutSerializer(
-                cards, context={"request": request}, many=True
-            ).data
+            self.CardsOutPutSerializer(
+                cards,
+                context={"request": request},
+                many=True,
+            ).data,
         )
 
     @swagger_auto_schema(
-        request_body=SingleCategoryCardsCreateInputSerializer,
-        responses={200: SingleCategoryCardsOutPutSerializer(many=True)},
+        request_body=CardCreateInputSerializer,
+        responses={200: CardsOutPutSerializer},
     )
-    def post(self, request, category):
-        serializer = self.SingleCategoryCardsCreateInputSerializer(data=request.data)
+    def post(self, request):
+        serializer = self.CardCreateInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         try:
             query = create_card(
-                category=category,
+                category=serializer.validated_data.get("category"),
                 name=serializer.validated_data.get("name"),
                 image=serializer.validated_data.get("image"),
             )
@@ -82,9 +60,7 @@ class SingleCategoryCardsApi(APIView):
         except Exception as ex:
             return Response(str(ex), status=status.HTTP_400_BAD_REQUEST)
         return Response(
-            self.SingleCategoryCardsOutPutSerializer(
-                query, context={"request": request}
-            ).data
+            self.CardsOutPutSerializer(query, context={"request": request}).data
         )
 
 
@@ -92,17 +68,17 @@ class SingleCardApi(APIView):
 
     class SingleCardOutPutSerializer(serializers.ModelSerializer):
         category = serializers.CharField(source="category.name")
-        levels = serializers.ListField(source='levels.level')
+        levels = serializers.SerializerMethodField()
 
         # TODO: add levels
         class Meta:
             model = Card
-            fields = [
-                "name",
-                "category",
-                "slug",
-                'levels'
-            ]
+            fields = ["name", "category", "slug", "levels"]
+
+        def get_levels(self, obj):
+            return obj.levels.values(
+                "level", "upgrade_cost", "profit_per_hour", "coin_per_profit"
+            )
 
     @swagger_auto_schema(responses={200: SingleCardOutPutSerializer()})
     def get(self, request, slug):
