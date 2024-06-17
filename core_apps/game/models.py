@@ -10,6 +10,9 @@ class Category(TimeStampedModel):
     class Meta:
         verbose_name = "Category"
         verbose_name_plural = "Categories"
+        indexes = [
+            models.Index(fields=['name']), 
+        ]
 
     def __str__(self) -> str:
         return self.name
@@ -27,6 +30,10 @@ class Card(TimeStampedModel):
 
     class Meta:
         unique_together = [["name", "category"]]
+        indexes = [
+            models.Index(fields=['name']), 
+            models.Index(fields=['category']), 
+        ]
 
 
 class Level(TimeStampedModel):
