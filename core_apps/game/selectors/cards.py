@@ -7,4 +7,4 @@ def get_cards() -> QuerySet[Card]:
 
 
 def get_card(category) -> QuerySet[Card]:
-    return Card.objects.filter(category__name=category)
+    return Card.objects.filter(category__name=category).select_related('category')
