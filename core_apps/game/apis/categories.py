@@ -24,6 +24,9 @@ class CategoriesApi(APIView):
                 "updated_at",
             ]
 
+    @swagger_auto_schema(
+        responses={200: CategoryOutPutSerializer(many=True)},
+    )
     def get(self, request):
         query = get_categories()
 
@@ -33,7 +36,10 @@ class CategoriesApi(APIView):
             ).data
         )
 
-    @swagger_auto_schema(request_body=CategoryInputSerializer)
+    @swagger_auto_schema(
+        request_body=CategoryInputSerializer,
+        responses={200: CategoryOutPutSerializer(many=True)},
+    )
     def post(self, request):
         serializer = self.CategoryInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

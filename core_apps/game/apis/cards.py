@@ -22,7 +22,9 @@ class CardsApi(APIView):
                 "updated_at",
             ]
 
-    @swagger_auto_schema(responses={200: CardsOutPutSerializer(many=True)})
+    @swagger_auto_schema(
+        responses={200: CardsOutPutSerializer(many=True)},
+    )
     def get(self, request):
         query = get_cards()
         return Response(
@@ -64,7 +66,10 @@ class CardApi(APIView):
             ).data
         )
 
-    @swagger_auto_schema(request_body=CardCreateInputSerializer)
+    @swagger_auto_schema(
+        request_body=CardCreateInputSerializer,
+        responses={200: CardOutPutSerializer(many=True)},
+    )
     def post(self, request, category):
         serializer = self.CardCreateInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
