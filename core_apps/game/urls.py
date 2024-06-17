@@ -1,9 +1,14 @@
 from django.urls import path
-from .apis.categories import CategoriesApi
-from .apis.cards import CardsApi, CardApi
+from .apis.categories import AllCategoriesApi
+from .apis.cards import AllCategoriesCardsApi, SingleCategoryCardsApi, SingleCardApi
 
 urlpatterns = [
-    path("categories/", CategoriesApi.as_view(), name="categories"),
-    path("cards/", CardsApi.as_view(), name="cards"),
-    path("cards/<str:category>/", CardApi.as_view(), name="cards"),
+    path("categories/", AllCategoriesApi.as_view(), name="categories"),
+    path("cards/", AllCategoriesCardsApi.as_view(), name="all_categories_cards"),
+    path(
+        "cards/<str:category>/",
+        SingleCategoryCardsApi.as_view(),
+        name="single_category_cards",
+    ),
+    path("card/<str:slug>/", SingleCardApi.as_view(), name="single_card"),
 ]

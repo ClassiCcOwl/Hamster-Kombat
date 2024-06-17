@@ -2,6 +2,7 @@ from django.db import models
 from core_apps.common.models import TimeStampedModel
 from django.template.defaultfilters import slugify
 
+
 class Category(TimeStampedModel):
 
     name = models.CharField(max_length=30)
@@ -10,7 +11,7 @@ class Category(TimeStampedModel):
         verbose_name = "Category"
         verbose_name_plural = "Categories"
         indexes = [
-            models.Index(fields=['name']), 
+            models.Index(fields=["name"]),
         ]
 
     def __str__(self) -> str:
@@ -19,18 +20,18 @@ class Category(TimeStampedModel):
 
 class Card(TimeStampedModel):
     name = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=300, null=True , blank=True)
+    slug = models.SlugField(max_length=300, null=True, blank=True)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="cards"
     )
     image = models.ImageField(upload_to="card_images", blank=True)
+
     class Meta:
         unique_together = [["name", "category"]]
         indexes = [
-            models.Index(fields=['name']), 
-            models.Index(fields=['category']), 
+            models.Index(fields=["name"]),
+            models.Index(fields=["category"]),
         ]
-
 
     def __str__(self) -> str:
         return self.name
