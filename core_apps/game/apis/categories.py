@@ -13,9 +13,11 @@ from core_apps.game.selectors.categories import (
     get_single_categories_cards,
 )
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 
 class AllCategoriesApi(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     class CategoryCreateInputSerializer(serializers.Serializer):
         name = serializers.CharField(max_length=30)
@@ -63,6 +65,7 @@ class AllCategoriesApi(APIView):
 
 
 class SingleCategoryCardsApi(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     class SingleCategoryCardsOutPutSerializer(serializers.ModelSerializer):
         class Meta:

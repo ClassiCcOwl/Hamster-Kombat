@@ -10,8 +10,11 @@ from core_apps.game.selectors.cards import (
 )
 from drf_yasg.utils import swagger_auto_schema
 
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+
 
 class AllCardsApi(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     class CardCreateInputSerializer(serializers.Serializer):
         name = serializers.CharField(max_length=50)
@@ -65,6 +68,7 @@ class AllCardsApi(APIView):
 
 
 class SingleCardApi(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     class SingleCardOutPutSerializer(serializers.ModelSerializer):
         category = serializers.CharField(source="category.name")

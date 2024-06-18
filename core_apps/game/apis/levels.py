@@ -9,9 +9,10 @@ from core_apps.game.selectors.levels import (
     # get_all_cards,
 )
 from drf_yasg.utils import swagger_auto_schema
-
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 class LevelApi(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     class LevelCreateInputSerializer(serializers.Serializer):
         level = serializers.IntegerField()
