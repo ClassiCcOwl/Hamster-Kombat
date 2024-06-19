@@ -19,7 +19,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("", schema_view.with_ui("swagger", cache_timeout=0)),
     path("admin/", admin.site.urls),
-    path("game/", include("core_apps.game.urls"), name="game"),
+    path("api/", include("core_apps.game.urls"), name="api"),
 ]
 
 

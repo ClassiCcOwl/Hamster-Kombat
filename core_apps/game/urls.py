@@ -5,13 +5,13 @@ from .apis.levels import LevelApi
 
 
 urlpatterns = [
-    path("categories/", AllCategoriesApi.as_view(), name="all_categories"),
+    path("v1/categories/", AllCategoriesApi.as_view(), name="all_categories"),
     path(
-        "categories/<str:category>",
+        "v1/categories/<str:category>",
         SingleCategoryCardsApi.as_view(),
         name="single_category_cards",
     ),
-    path("cards/", AllCardsApi.as_view(), name="all_cards"),
-    path("cards/<str:slug>/", SingleCardApi.as_view(), name="single_card"),
-    path("cards/<str:slug>/levels/", LevelApi.as_view(), name="card_levels"),
+    path("v1/cards/", AllCardsApi.as_view(), name="all_cards"),
+    path("v1/cards/<str:slug>/", SingleCardApi.as_view(), name="single_card"),
+    path("v1/cards/<str:slug>/levels/", LevelApi.as_view(), name="card_levels"),
 ]
