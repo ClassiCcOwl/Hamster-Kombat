@@ -3,10 +3,7 @@ from .base import env
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env(
-    "DJANGO_SECRET_KEY",
-    default="8j48laPaYNICwHG1UqbPNosk3ZJYgGuJMV5BVUfJANA11YQRGC4",
-)
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
