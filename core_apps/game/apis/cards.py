@@ -36,7 +36,9 @@ class AllCardsApi(APIView):
             ]
 
         def get_image(self, obj):
-            return obj.image.url
+            request = self.context.get('request')
+            photo_url = obj.image.url
+            return request.build_absolute_uri(photo_url)
 
     @swagger_auto_schema(
         responses={200: CardsOutPutSerializer(many=True)},
