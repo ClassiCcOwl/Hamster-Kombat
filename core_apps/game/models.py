@@ -24,7 +24,7 @@ class Card(TimeStampedModel):
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="cards"
     )
-    image = models.ImageField(upload_to="card_images/", blank=True)
+    image = models.ImageField(upload_to="card_images/", default='/default.png')
 
     class Meta:
         unique_together = [["name", "category"]]
