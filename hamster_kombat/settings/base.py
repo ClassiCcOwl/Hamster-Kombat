@@ -150,4 +150,7 @@ REST_FRAMEWORK = {
 }
 
 
+MEDIA_URL = "/mediafiles/"
+MEDIA_ROOT = str(BASE_DIR / "mediafiles")
+
 # CORS_URLS_REGEX = r"*"

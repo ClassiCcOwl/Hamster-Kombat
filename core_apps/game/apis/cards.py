@@ -24,6 +24,7 @@ class AllCardsApi(APIView):
 
     class CardsOutPutSerializer(serializers.ModelSerializer):
         category = serializers.CharField(source="category.name")
+        image = serializers.SerializerMethodField()
 
         class Meta:
             model = Card
@@ -31,7 +32,11 @@ class AllCardsApi(APIView):
                 "name",
                 "category",
                 "slug",
+                "image",
             ]
+
+        def get_image(self, obj):
+            return obj.image.url
 
     @swagger_auto_schema(
         responses={200: CardsOutPutSerializer(many=True)},
@@ -73,16 +78,26 @@ class SingleCardApi(APIView):
     class SingleCardOutPutSerializer(serializers.ModelSerializer):
         category = serializers.CharField(source="category.name")
         levels = serializers.SerializerMethodField()
+        image = serializers.SerializerMethodField()
 
         # TODO: add levels
         class Meta:
             model = Card
-            fields = ["name", "category", "slug", "levels"]
+            fields = [
+                "name",
+                "category",
+                "slug",
+                "levels",
+                "image",
+            ]
 
         def get_levels(self, obj):
             return obj.levels.values(
                 "level", "upgrade_cost", "profit_per_hour", "coin_per_profit"
             )
+
+        def get_image(self, obj):
+            return obj.image.url
 
     @swagger_auto_schema(responses={200: SingleCardOutPutSerializer()})
     def get(self, request, slug):
