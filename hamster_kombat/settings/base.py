@@ -38,6 +38,7 @@ LOCAL_APPS = [
     "core_apps.users",
     "core_apps.game",
     "core_apps.common",
+    "core_apps.crawler",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -142,10 +143,10 @@ STATIC_URL = "static/"
 STATIC_ROOT = str(BASE_DIR / "static")
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
     ),
 }
 
