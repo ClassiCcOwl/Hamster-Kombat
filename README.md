@@ -7,8 +7,10 @@ This project is hamster kombat card tracker
 ## TODO
 
 - [x] Create custom user
-- [ ] Create category model
-- [ ] Create card model
-- [ ] Create level model
+- [x] Create category model
+- [x] Create card model
+- [x] Create level model
+- [x] Create apis
 - [ ] Insert data
-- [ ] Create apis
+- [ ] Create card crwaler
+- [ ] Create level crwaler
