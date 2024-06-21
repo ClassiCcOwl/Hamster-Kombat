@@ -39,6 +39,7 @@ LOCAL_APPS = [
     "core_apps.game",
     "core_apps.common",
     "core_apps.crawler",
+    "core_apps.daily",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

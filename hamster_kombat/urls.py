@@ -23,8 +23,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     path("", schema_view.with_ui("swagger", cache_timeout=0)),
     path("admin/", admin.site.urls),
-    path("api/", include("core_apps.game.urls"), name="api"),
-    path("api/", include("core_apps.crawler.urls"), name="api"),
+    path("api/", include("core_apps.game.urls"), name="api_game"),
+    path("api/", include("core_apps.crawler.urls"), name="api_crawler"),
+    path("api/", include("core_apps.daily.urls"), name="api_daily"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
