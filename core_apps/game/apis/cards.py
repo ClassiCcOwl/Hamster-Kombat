@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
-from core_apps.game.models import Card
+from core_apps.game.models import Card, Level
 from core_apps.game.services.cards import create_card
 from core_apps.game.selectors.cards import (
     get_single_card,
@@ -16,6 +16,17 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 class AllCardsApi(APIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
+    class levelOutPutSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Level
+            fields = [
+                "level",
+                "upgrade_cost",
+                "profit_per_hour",
+                "coin_per_profit",
+            ]
+
     class CardCreateInputSerializer(serializers.Serializer):
         name = serializers.CharField(max_length=50)
         category = serializers.CharField(max_length=30)
@@ -25,18 +36,17 @@ class AllCardsApi(APIView):
     class CardsOutPutSerializer(serializers.ModelSerializer):
         category = serializers.CharField(source="category.name")
         image = serializers.SerializerMethodField()
+        levels = serializers.SerializerMethodField()
 
         class Meta:
             model = Card
-            fields = [
-                "name",
-                "category",
-                "slug",
-                "image",
-            ]
+            fields = ["name", "category", "slug", "image", "levels"]
+
+        def get_levels(self, obj):
+            return AllCardsApi.levelOutPutSerializer(obj.levels, many=True).data
 
         def get_image(self, obj):
-            request = self.context.get('request')
+            request = self.context.get("request")
             photo_url = obj.image.url
             return request.build_absolute_uri(photo_url)
 
@@ -94,9 +104,7 @@ class SingleCardApi(APIView):
             ]
 
         def get_levels(self, obj):
-            return obj.levels.values(
-                "level", "upgrade_cost", "profit_per_hour", "coin_per_profit"
-            )
+            return AllCardsApi.levelOutPutSerializer(obj.levels, many=True).data
 
         def get_image(self, obj):
             return obj.image.url

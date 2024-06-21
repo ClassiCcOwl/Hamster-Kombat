@@ -12,5 +12,5 @@ class TimeStampedModel(models.Model):
         abstract = True
         # ordering = ["-created_at", "-updated_at"]
         indexes = [
-            models.Index(fields=['pkid', 'id']),  # Multi-column index
+            models.Index(fields=["pkid", "id"]),  # Multi-column index
         ]

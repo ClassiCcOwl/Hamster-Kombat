@@ -1,13 +1,26 @@
-from django.db.models import QuerySet
-from core_apps.game.models import Card
+from django.db.models import QuerySet, Prefetch
+from core_apps.game.models import Card, Level
 
 
 def get_all_cards() -> QuerySet[Card]:
-    return (
-        Card.objects.only("id", "name", "category", "slug", "updated_at", "image")
+
+    query = (
+        Card.objects.only(
+            "name",
+            "category",
+            "slug",
+            "image",
+        )
+        .prefetch_related(
+            Prefetch("levels__card"),
+        )
         .select_related("category")
         .all()
+        # .prefetch_related(
+        #     "levels",
+        # )
     )
+    return query
 
 
 def get_single_card(slug: str) -> Card:

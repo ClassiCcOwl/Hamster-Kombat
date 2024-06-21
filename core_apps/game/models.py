@@ -51,6 +51,10 @@ class Level(TimeStampedModel):
     class Meta:
         unique_together = [["level", "card"]]
         ordering = ["-level"]
+        indexes = [
+            models.Index(fields=["level"]),
+        ]
+
 
     def __str__(self) -> str:
         return f"{self.card.name} Level {self.level}"
