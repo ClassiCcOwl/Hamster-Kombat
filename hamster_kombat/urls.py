@@ -24,6 +24,7 @@ urlpatterns = [
     path("", schema_view.with_ui("swagger", cache_timeout=0)),
     path("admin/", admin.site.urls),
     path("api/", include("core_apps.game.urls"), name="api"),
+    path("api/", include("core_apps.crawler.urls"), name="api"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
