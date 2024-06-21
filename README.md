@@ -1,6 +1,6 @@
-# Hamster Kombat 
+# Hamster Kombat API
 
-This project is hamster kombat card tracker
+Hamster Kombat API
 
 
 
@@ -11,6 +11,8 @@ This project is hamster kombat card tracker
 - [x] Create card model
 - [x] Create level model
 - [x] Create apis
-- [ ] Insert data
-- [ ] Create card crwaler
-- [ ] Create level crwaler
+- [X] Insert data
+- [X] Create card crwaler
+- [X] Create level crwaler
+- [ ] Run crawlers in perodic time with celery
+- [ ] Morse code daily
