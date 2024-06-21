@@ -10,7 +10,7 @@ class LevelApi(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        url = env.url("CRAWL_URL")
+        url = env("CRAWL_URL")
         categories = crawlers.crawl_categories(url)
 
         links = crawlers.get_links_from_category(categories)
