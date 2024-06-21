@@ -10,9 +10,7 @@ class LevelApi(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        # url = env.url("CRAWL_URL")
-        url = "https://hamster-combo.com/category-sitemap.xml"
-
+        url = env.url("CRAWL_URL")
         categories = crawlers.crawl_categories(url)
 
         links = crawlers.get_links_from_category(categories)
