@@ -20,7 +20,7 @@ class Category(TimeStampedModel):
 
 class Card(TimeStampedModel):
     name = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=300, null=True, blank=True)
+    slug = models.SlugField(max_length=300, null=True, blank=True, editable=False)
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="cards"
     )
