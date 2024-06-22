@@ -14,5 +14,7 @@ Hamster Kombat API
 - [X] Insert data
 - [X] Create card crwaler
 - [X] Create level crwaler
+- [X] Add daily combos
 - [ ] Run crawlers in perodic time with celery
-- [ ] Morse code daily
+- [ ] Add morse code daily
+- [ ] Add cards order
