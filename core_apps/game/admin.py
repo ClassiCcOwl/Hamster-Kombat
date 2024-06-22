@@ -55,10 +55,18 @@ class LevelAdmin(admin.ModelAdmin):
     ]
     list_display_links = [
         "pkid",
+        'card',
         "level",
     ]
     list_filter = [
         "card",
+    ]
+
+    search_fields = [
+        "card__name",
+    ]
+    ordering = [
+        "card__name",
     ]
 
 
