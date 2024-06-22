@@ -1,9 +1,14 @@
 from django.contrib import admin
 from .models import Category, Card, Level
-
+from django.forms import IntegerField, NumberInput
+from django.db import models
 
 class LevelsInstanceInline(admin.TabularInline):
     model = Level
+    formfield_overrides = {
+         models.IntegerField: {'widget': NumberInput(attrs={'size':'3'})},
+    }
+
 class CardsInstanceInline(admin.TabularInline):
     model = Card
 
@@ -52,6 +57,9 @@ class CardAdmin(admin.ModelAdmin):
     ]
 
     inlines = [LevelsInstanceInline]
+    formfield_overrides = {
+         models.IntegerField: {'widget': NumberInput(attrs={'size':'3'})},
+    }
 
 class LevelAdmin(admin.ModelAdmin):
     list_display = [
@@ -77,7 +85,9 @@ class LevelAdmin(admin.ModelAdmin):
     ordering = [
         "card__name",
     ]
-
+    formfield_overrides = {
+         models.IntegerField: {'widget': NumberInput(attrs={'size':'3'})},
+    }
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Card, CardAdmin)
