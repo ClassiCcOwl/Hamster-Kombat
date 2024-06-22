@@ -21,16 +21,26 @@ class CardAdmin(admin.ModelAdmin):
     list_display = [
         "pkid",
         "name",
+        "slug",
         "category",
-        "updated_at",
+        "image",
     ]
     list_display_links = [
         "pkid",
         "name",
+        "slug",
     ]
     list_filter = [
-        "name",
         "category",
+        "name",
+    ]
+
+    search_fields = [
+        "name",
+    ]
+
+    ordering = [
+        "name",
     ]
 
 
