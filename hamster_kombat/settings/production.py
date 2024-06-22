@@ -5,4 +5,4 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
-CSRF_TRUSTED_ORIGINS = ["https://hamster-kombat.chbk.run"]
+CSRF_TRUSTED_ORIGINS = ["https://hamster-kombat.chbk.run","https://api.boardingle.ir"]
