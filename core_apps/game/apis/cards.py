@@ -48,7 +48,9 @@ class AllCardsApi(APIView):
         def get_image(self, obj):
             request = self.context.get("request")
             photo_url = obj.image.url
-            return request.build_absolute_uri(photo_url)
+            photo_uri = request.build_absolute_uri(photo_url)
+            photo_uri_secured = photo_uri.replace("http", "https")
+            return photo_uri_secured
 
     @swagger_auto_schema(
         responses={200: CardsOutPutSerializer(many=True)},
@@ -107,7 +109,11 @@ class SingleCardApi(APIView):
             return AllCardsApi.levelOutPutSerializer(obj.levels, many=True).data
 
         def get_image(self, obj):
-            return obj.image.url
+            request = self.context.get("request")
+            photo_url = obj.image.url
+            photo_uri = request.build_absolute_uri(photo_url)
+            photo_uri_secured = photo_uri.replace("http", "https")
+            return photo_uri_secured
 
     @swagger_auto_schema(responses={200: SingleCardOutPutSerializer()})
     def get(self, request, slug):
