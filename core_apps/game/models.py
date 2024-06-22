@@ -31,6 +31,7 @@ class Card(TimeStampedModel):
         indexes = [
             models.Index(fields=["name"]),
             models.Index(fields=["category"]),
+            models.Index(fields=["slug"]),
         ]
 
     def __str__(self) -> str:
