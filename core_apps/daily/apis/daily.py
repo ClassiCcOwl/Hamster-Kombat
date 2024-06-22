@@ -4,7 +4,7 @@ from rest_framework import serializers
 from rest_framework import status
 from core_apps.daily.models import DailyCombo
 from core_apps.daily.services.daily import create_daily_combo
-from core_apps.daily.selectors.daily import get_daily_combo
+from core_apps.daily.selectors.daily import get_daily_combo, get_today_daily_combo
 from drf_yasg.utils import swagger_auto_schema
 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
@@ -105,3 +105,19 @@ class DailyCombosApi(APIView):
     #     return Response(
     #         self.CardsOutPutSerializer(query, context={"request": request}).data
     #     )
+
+
+class TodayCombosApi(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    @swagger_auto_schema(
+        responses={200: DailyCombosApi.DailyComboOutPutSerializer},
+    )
+    def get(self, request):
+        combo = get_today_daily_combo()
+        return Response(
+            DailyCombosApi.DailyComboOutPutSerializer(
+                combo,
+                context={"request": request},
+            ).data,
+        )
