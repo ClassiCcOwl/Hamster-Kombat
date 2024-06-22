@@ -2,6 +2,12 @@ from django.contrib import admin
 from .models import Category, Card, Level
 
 
+class LevelsInstanceInline(admin.TabularInline):
+    model = Level
+class CardsInstanceInline(admin.TabularInline):
+    model = Card
+
+
 class CategoryAdmin(admin.ModelAdmin):
     list_display = [
         "pkid",
@@ -15,6 +21,8 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = [
         "name",
     ]
+
+    inlines = [CardsInstanceInline]
 
 
 class CardAdmin(admin.ModelAdmin):
@@ -43,6 +51,7 @@ class CardAdmin(admin.ModelAdmin):
         "name",
     ]
 
+    inlines = [LevelsInstanceInline]
 
 class LevelAdmin(admin.ModelAdmin):
     list_display = [
@@ -55,7 +64,7 @@ class LevelAdmin(admin.ModelAdmin):
     ]
     list_display_links = [
         "pkid",
-        'card',
+        "card",
         "level",
     ]
     list_filter = [
