@@ -1,6 +1,6 @@
 from django.urls import path
 from .apis.categories import AllCategoriesApi, SingleCategoryCardsApi
-from .apis.cards import AllCardsApi, SingleCardApi
+from .apis.cards import AllCardsApi, SingleCardApi, RecentlyAddedCardsApi
 from .apis.levels import LevelApi
 
 
@@ -14,4 +14,5 @@ urlpatterns = [
     path("v1/cards/", AllCardsApi.as_view(), name="all_cards"),
     path("v1/cards/<str:slug>/", SingleCardApi.as_view(), name="single_card"),
     path("v1/cards/<str:slug>/levels/", LevelApi.as_view(), name="card_levels"),
+    path("v1/cards/recent/<int:number>/", RecentlyAddedCardsApi.as_view(), name="recent_cards"),
 ]

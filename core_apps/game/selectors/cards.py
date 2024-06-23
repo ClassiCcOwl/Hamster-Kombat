@@ -29,3 +29,8 @@ def get_single_card(slug: str) -> Card:
         .select_related("category")
         .get(slug=slug)
     )
+
+
+def get_recently_added_cards(n: int) -> QuerySet[Card]:
+
+    return Card.objects.all().order_by('-created_at')[:n]

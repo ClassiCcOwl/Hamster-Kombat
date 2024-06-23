@@ -7,6 +7,7 @@ from core_apps.game.services.cards import create_card
 from core_apps.game.selectors.cards import (
     get_single_card,
     get_all_cards,
+    get_recently_added_cards,
 )
 from drf_yasg.utils import swagger_auto_schema
 
@@ -120,4 +121,40 @@ class SingleCardApi(APIView):
         card = get_single_card(slug)
         return Response(
             self.SingleCardOutPutSerializer(card, context={"request": request}).data
+        )
+
+
+class RecentlyAddedCardsApi(APIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    class RecantlyAddedCardsOutPutSerializer(serializers.ModelSerializer):
+        category = serializers.CharField(source="category.name")
+        image = serializers.SerializerMethodField()
+
+
+        class Meta:
+            model = Card
+            fields = [
+                "name",
+                "category",
+                "slug",
+                "image",
+            ]
+
+        def get_image(self, obj):
+            request = self.context.get("request")
+            photo_url = obj.image.url
+            photo_uri = request.build_absolute_uri(photo_url)
+            photo_uri_secured = photo_uri.replace("http", "https")
+            return photo_uri_secured
+
+    @swagger_auto_schema(responses={200: RecantlyAddedCardsOutPutSerializer(many=True)})
+    def get(self, request, number):
+        card = get_recently_added_cards(number)
+        return Response(
+            self.RecantlyAddedCardsOutPutSerializer(
+                card,
+                context={"request": request},
+                many=True,
+            ).data
         )
