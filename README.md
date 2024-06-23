@@ -1,6 +1,11 @@
 # Hamster Kombat API
 
-Hamster Kombat API
+## A restful API for Hamster Kombat
+
+- get categories list
+- get cards list
+- get cards levels information
+
 
 
 
