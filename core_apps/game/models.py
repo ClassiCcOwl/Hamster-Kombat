@@ -27,6 +27,7 @@ class Card(TimeStampedModel):
     image = models.ImageField(upload_to="card_images/", default='default.png')
 
     class Meta:
+        ordering = ['category__created_at','created_at']
         unique_together = [["name", "category"]]
         indexes = [
             models.Index(fields=["name"]),
