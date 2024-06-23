@@ -10,7 +10,7 @@ class TimeStampedModel(models.Model):
 
     class Meta:
         abstract = True
-        # ordering = ["-created_at", "-updated_at"]
+        ordering = ["created_at"]
         indexes = [
             models.Index(fields=["pkid", "id"]),  # Multi-column index
         ]
