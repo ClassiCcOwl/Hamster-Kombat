@@ -51,10 +51,13 @@ def get_links_from_category(categories):
 
 def crawl_level(url):
     name = url.split("/")[-2]
-    table = pd.read_html(url)[0]
-    mask = table[table["Hourly Income"] != "-"]
-    mask.drop(["Payback (hours/days)"], axis=1, inplace=True)
-    mask = mask.astype({"Upgrade Cost": "int", "Hourly Income": "int"})
-    listed = [row.tolist() + [slugify(name)] for index, row in mask.iterrows()]
-
+    try:
+        table = pd.read_html(url)[0]
+        mask = table[table["Hourly Income"] != "-"]
+        mask.drop(["Payback (hours/days)"], axis=1, inplace=True)
+        mask = mask.astype({"Upgrade Cost": "int", "Hourly Income": "int"})
+        listed = [row.tolist() + [slugify(name)] for index, row in mask.iterrows()]
+    except Exception as e:
+        print(str(e))
+        return []
     return listed
