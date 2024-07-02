@@ -32,6 +32,7 @@ THIRD_PARTY_APPS = [
     "django_filters",
     "drf_yasg",
     "corsheaders",
+    "request",
 ]
 
 LOCAL_APPS = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "request.middleware.RequestMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
