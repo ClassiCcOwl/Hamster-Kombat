@@ -27,7 +27,11 @@ class ProfileCard(TimeStampedModel):
         Card, on_delete=models.PROTECT, related_name="profile_cards"
     )
 
-    max_level = models.PositiveSmallIntegerField(default=1)
+    level = models.PositiveSmallIntegerField(default=1)
+
+    related_level = models.ForeignKey(
+        Level, on_delete=models.PROTECT, null=True, blank=True, editable=False
+    )
 
     def __str__(self):
         return f"{self.profile}"
@@ -37,3 +41,12 @@ class ProfileCard(TimeStampedModel):
         indexes = [
             models.Index(fields=["profile"]),
         ]
+
+    def save(self, *args, **kwargs):
+
+        if self.level is not None:
+            related_instance = Level.objects.filter(card=self.card, level=self.level)
+            if related_instance.exists():
+                self.related_level = related_instance.first()
+
+        super().save(*args, **kwargs)

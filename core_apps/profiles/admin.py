@@ -18,7 +18,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 class ProfileCardAdmin(admin.ModelAdmin):
-    list_display = ["pkid", "profile", "card", 'max_level']
+    list_display = ["pkid", "profile", "card", "level"]
     list_display_links = ["pkid", "card"]
     list_filter = ["profile", "card"]
     search_fields = ["profile", "card"]
