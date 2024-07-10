@@ -22,5 +22,8 @@
 - [X] Add daily combos
 - [X] Add category ordering
 - [X] Add cards order
+- [ ] Add auth
+- [ ] Add profile manage logics and apis
+- [ ] Add ranking
 - [ ] Add morse code daily
 - [ ] Run crawlers in perodic time with celery
