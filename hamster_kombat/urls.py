@@ -6,7 +6,7 @@ from rest_framework import permissions
 from django.conf.urls.static import static
 
 from django.conf import settings
-
+from dj_rest_auth.views import PasswordResetConfirmView
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -27,6 +27,14 @@ urlpatterns = [
     path("api/", include("core_apps.crawler.urls"), name="api_crawler"),
     path("api/", include("core_apps.daily.urls"), name="api_daily"),
     path("api/", include("core_apps.profiles.urls"), name="api_profile"),
+    path("api/", include("core_apps.users.urls")),
+    path("api/v1/auth/", include("dj_rest_auth.urls")),
+    path("api/v1/auth/registration/", include("dj_rest_auth.registration.urls")),
+    path(
+        "api/v1/auth/password/reset/confirm/<uidb64>/<token>/",
+        PasswordResetConfirmView.as_view(),
+        name="password_reset_confirm",
+    ),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
