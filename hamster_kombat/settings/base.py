@@ -1,5 +1,6 @@
 from pathlib import Path
 import environ
+from datetime import timedelta
 
 env = environ.Env()
 
@@ -33,6 +34,12 @@ THIRD_PARTY_APPS = [
     "drf_yasg",
     "corsheaders",
     "request",
+    "rest_framework.authtoken",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
 ]
 
 LOCAL_APPS = [
@@ -56,6 +63,7 @@ MIDDLEWARE = [
     "request.middleware.RequestMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "hamster_kombat.urls"
@@ -147,13 +155,43 @@ STATIC_URL = "static/"
 STATIC_ROOT = str(BASE_DIR / "static")
 
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.TokenAuthentication",
-        "rest_framework.authentication.BasicAuthentication",
-        "rest_framework.authentication.SessionAuthentication",
-    ),
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication"
+        # "rest_framework.authentication.TokenAuthentication",
+        # "rest_framework.authentication.BasicAuthentication",
+        # "rest_framework.authentication.SessionAuthentication",
+    ],
+    # "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    # "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
 }
 
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKNES": True,
+    "SIGNING_KEY": env("SIGNING_KEY"),
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+}
+
+
+REST_AUTH = {
+    "USE_JWT": True,
+    "JWT_AUTH_COOKIE": "boardingle-access-token",
+    "JWT_AUTH_REFRESH_COOKIE": "boardingle-refresh-token",
+    "REGISTER_SERIALIZER": "core_apps.users.serializers.CustomRegisterSerializer",
+}
+
+AUTHENTICATION_BACKENDS = [
+    "allauth.account.auth_backends.AuthenticationBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+ACCOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_USER_MODEL_EMAIL_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_USERNAME_REQUIRED = True
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = str(BASE_DIR / "media/")
