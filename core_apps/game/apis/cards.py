@@ -41,7 +41,14 @@ class AllCardsApi(APIView):
 
         class Meta:
             model = Card
-            fields = ["name", "category", "slug", "image", "levels"]
+            fields = [
+                "id",
+                "name",
+                "category",
+                "slug",
+                "image",
+                "levels",
+            ]
 
         def get_levels(self, obj):
             return AllCardsApi.levelOutPutSerializer(obj.levels, many=True).data
@@ -99,6 +106,7 @@ class SingleCardApi(APIView):
         class Meta:
             model = Card
             fields = [
+                "id",
                 "name",
                 "category",
                 "slug",
@@ -131,10 +139,10 @@ class RecentlyAddedCardsApi(APIView):
         category = serializers.CharField(source="category.name")
         image = serializers.SerializerMethodField()
 
-
         class Meta:
             model = Card
             fields = [
+                "id",
                 "name",
                 "category",
                 "slug",

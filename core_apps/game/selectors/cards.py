@@ -6,6 +6,7 @@ def get_all_cards() -> QuerySet[Card]:
 
     query = (
         Card.objects.only(
+            "id",
             "name",
             "category",
             "slug",
@@ -33,4 +34,8 @@ def get_single_card(slug: str) -> Card:
 
 def get_recently_added_cards(n: int) -> QuerySet[Card]:
 
-    return Card.objects.all().order_by('-created_at')[:n]
+    return Card.objects.all().order_by("-created_at")[:n]
+
+
+def get_single_card_by_id(card_id):
+    return Card.objects.get(id=card_id)
