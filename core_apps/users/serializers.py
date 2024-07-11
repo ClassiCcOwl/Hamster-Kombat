@@ -1,4 +1,5 @@
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from dj_rest_auth.serializers import LoginSerializer
 
 from allauth.account.adapter import get_adapter
 from rest_framework import serializers
@@ -49,3 +50,8 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.password = self.cleaned_data.get("password1")
 
         return user
+
+
+class CustomLoginSerializer(LoginSerializer):
+    username = serializers.CharField(required=True, allow_blank=False)
+    email = None

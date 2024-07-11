@@ -141,7 +141,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-# LOGIN_URL = "api/v1/auth/login/"
+LOGIN_URL = "api/v1/auth/login/"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
@@ -181,17 +181,19 @@ REST_AUTH = {
     "JWT_AUTH_COOKIE": "boardingle-access-token",
     "JWT_AUTH_REFRESH_COOKIE": "boardingle-refresh-token",
     "REGISTER_SERIALIZER": "core_apps.users.serializers.CustomRegisterSerializer",
+    "LOGIN_SERIALIZER": "core_apps.users.serializers.CustomLoginSerializer",
 }
 
 AUTHENTICATION_BACKENDS = [
-    "allauth.account.auth_backends.AuthenticationBackend",
     "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
 ACCOUNT_EMAIL_VERIFICATION = "none"
-ACCOUNT_USER_MODEL_EMAIL_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = "username"
 ACCOUNT_USERNAME_REQUIRED = True
+ACCOUNT_USER_MODEL_EMAIL_FIELD = None
+ACCOUNT_AUTHENTICATION_METHOD = "username"
+ACCOUNT_USER_MODEL_USERNAME_FIELD = "username"
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = str(BASE_DIR / "media/")
