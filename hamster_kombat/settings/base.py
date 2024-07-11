@@ -178,6 +178,7 @@ SIMPLE_JWT = {
 
 REST_AUTH = {
     "USE_JWT": True,
+    "JWT_AUTH_HTTPONLY": False,
     "JWT_AUTH_COOKIE": "boardingle-access-token",
     "JWT_AUTH_REFRESH_COOKIE": "boardingle-refresh-token",
     "REGISTER_SERIALIZER": "core_apps.users.serializers.CustomRegisterSerializer",
