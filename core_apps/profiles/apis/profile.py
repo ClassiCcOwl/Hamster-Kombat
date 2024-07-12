@@ -15,12 +15,13 @@ class ProfileAPI(APIView):
     permission_classes = [IsAuthenticated]
 
     class profileSerializer(serializers.ModelSerializer):
-        user = serializers.UUIDField(source="user.id")
+        user_id = serializers.UUIDField(source="user.id")
         username = serializers.CharField(source="user.username")
+        profile_id = serializers.UUIDField(source='id')
 
         class Meta:
             model = Profile
-            fields = ["user", "username", "first_name", "last_name"]
+            fields = ["profile_id","user_id", "username", "first_name", "last_name"]
 
     @swagger_auto_schema(
         responses={200: profileSerializer},
