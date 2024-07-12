@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 
 from django.conf import settings
 from dj_rest_auth.views import PasswordResetConfirmView
+import os
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -37,6 +38,17 @@ urlpatterns = [
     ),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+environ_mode = os.environ.get("DJANGO_ENVIRON_MODE", "local")
+
+
+if environ_mode == "local":
+    from debug_toolbar.toolbar import debug_toolbar_urls
+
+    urlpatterns = [
+        *urlpatterns,
+    ] + debug_toolbar_urls()
 
 
 admin.site.site_header = "Hamster Kombat API Admin"

@@ -9,3 +9,10 @@ SECRET_KEY = env("DJANGO_SECRET_KEY")
 DEBUG = True
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost:8080"]
+
+
+INSTALLED_APPS += ["debug_toolbar"]
+MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
