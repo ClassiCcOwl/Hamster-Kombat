@@ -71,10 +71,12 @@ class ProfileCards(APIView):
         coin_per_profit = serializers.IntegerField(
             source="related_level.coin_per_profit"
         )
+        card_id = serializers.CharField(source="card.id")
 
         class Meta:
             model = ProfileCard
             fields = [
+                "card_id",
                 "card",
                 "level",
                 "upgrade_cost",
